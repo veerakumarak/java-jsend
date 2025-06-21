@@ -9,8 +9,11 @@ import java.util.Objects;
 @JsonSerialize(using = ResponseSerializer.class)
 public class Response<T> {
     private final Status status;
-    private Map<String, T> data;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Map<String, String> reasons;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Map<String, T> data;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String message;
 
@@ -27,12 +30,23 @@ public class Response<T> {
         response.data = Map.of(key, data);
         return response;
     }
-    public static <T> Response<T> fail(Map<String, String>reasons) {
-        Objects.requireNonNull(reasons);
+
+    public static <T> Response<T> fail(String message) {
+        var response = new Response<T>(Status.Fail);
+        response.message = message;
+        return response;
+    }
+
+    public static <T> Response<T> fail(String key, String message) {
+        return fail(Map.of(key, message));
+    }
+
+    public static <T> Response<T> fail(Map<String, String> reasons) {
         var response = new Response<T>(Status.Fail);
         response.reasons = reasons;
         return response;
     }
+
     public static <T> Response<T> error(String message) {
         Objects.requireNonNull(message);
         var response = new Response<T>(Status.Error);
@@ -52,13 +66,9 @@ public class Response<T> {
         return this.status == Status.Error;
     }
 
-    public String getStatus() {
-        return this.status.toString();
+    public Status getStatus() {
+        return this.status;
     }
-//    public Data<T> getData() {
-//        return this.data;
-//    }
-
 
     public Map<String, T> getData() {
         return data;
@@ -66,5 +76,9 @@ public class Response<T> {
 
     public String getMessage() {
         return message;
+    }
+
+    public Map<String, String> getReasons() {
+        return reasons;
     }
 }
