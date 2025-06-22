@@ -5,7 +5,14 @@ public enum Status {
     Fail("fail"),
     Error("error");
 
-    Status(String success) {
+    private final String value;
+
+    Status(String value) {
+        this.value = value;
     }
 
+    @Override
+    public String toString() {
+        return value;
+    }
 }

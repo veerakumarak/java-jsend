@@ -4,7 +4,7 @@
 
   <groupId>io.github.veerakumarak</groupId>
   <artifactId>jsend</artifactId>
-  <version>2.0.0</version>
+  <version>3.0.0</version>
   <packaging>jar</packaging>
 
   <name>${project.groupId}:${project.artifactId}</name>
@@ -40,11 +40,6 @@
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-annotations</artifactId>
-      <version>2.18.0</version>
-    </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
